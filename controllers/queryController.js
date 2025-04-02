@@ -5,9 +5,9 @@ const { ROLE } = require('../utils/constants');
 exports.createQuery = async(req,res)=>{
     try{
 
-        const {employeeId,teamId,role,subject,description,message} = req.body;
+        const {employeeId,teamId,role,subject,description} = req.body;
 
-        if(!role || !subject || !description || !message || (!employeeId && !teamId)){
+        if(!role || !subject || !description || (!employeeId && !teamId)){
             return res.status(404).json({
                 success: false,
                 message: "Required details not found"
@@ -24,28 +24,28 @@ exports.createQuery = async(req,res)=>{
         });
 
         //Add User message in Replies
-        const newReply = await Reply.create({
-            queryId: newQuery?._id,
-            replyBy: role === ROLE.TEAM ? teamId : employeeId,
-            replyByModel: role === ROLE.EMPLOYEE ? "User" : "Team",
-            message
-        })
+        // const newReply = await Reply.create({
+        //     queryId: newQuery?._id,
+        //     replyBy: role === ROLE.TEAM ? teamId : employeeId,
+        //     replyByModel: role === ROLE.EMPLOYEE ? "User" : "Team",
+        //     message
+        // })
 
-        //Add user message reply in query replies array
-        const updatedQuery = await Query.findByIdAndUpdate(
-            newQuery?._id,
-            {
-                $push: {
-                    replies: newReply?._id
-                }
-            },
-            { new: true }
-        )
+        // //Add user message reply in query replies array
+        // const updatedQuery = await Query.findByIdAndUpdate(
+        //     newQuery?._id,
+        //     {
+        //         $push: {
+        //             replies: newReply?._id
+        //         }
+        //     },
+        //     { new: true }
+        // )
 
         return res.status(404).json({
             success: true,
             message: "Query created successfully",
-            data: updatedQuery
+            data: newQuery
         });
 
     }catch(err){

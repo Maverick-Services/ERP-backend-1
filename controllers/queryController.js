@@ -42,7 +42,7 @@ exports.createQuery = async(req,res)=>{
         //     { new: true }
         // )
 
-        return res.status(404).json({
+        return res.status(200).json({
             success: true,
             message: "Query created successfully",
             data: newQuery

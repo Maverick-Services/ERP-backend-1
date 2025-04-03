@@ -23,25 +23,6 @@ exports.createQuery = async(req,res)=>{
             description
         });
 
-        //Add User message in Replies
-        // const newReply = await Reply.create({
-        //     queryId: newQuery?._id,
-        //     replyBy: role === ROLE.TEAM ? teamId : employeeId,
-        //     replyByModel: role === ROLE.EMPLOYEE ? "User" : "Team",
-        //     message
-        // })
-
-        // //Add user message reply in query replies array
-        // const updatedQuery = await Query.findByIdAndUpdate(
-        //     newQuery?._id,
-        //     {
-        //         $push: {
-        //             replies: newReply?._id
-        //         }
-        //     },
-        //     { new: true }
-        // )
-
         return res.status(200).json({
             success: true,
             message: "Query created successfully",
@@ -203,7 +184,7 @@ exports.fetchQueriesByEmployee = async(req,res)=>{
         .populate('raisedBy',"-password")
         .exec();
 
-        console.log("All Queries: ",allQueries)
+        // console.log("All Queries: ",allQueries)
 
         if(!allQueries){
             return res.status(404).json({
@@ -253,7 +234,7 @@ exports.fetchQueriesByTeam = async(req,res)=>{
         .populate('raisedBy',"-password")
         .exec();
 
-        console.log("All Queries: ",allQueries)
+        // console.log("All Queries: ",allQueries)
         
         if(!allQueries){
             return res.status(404).json({
@@ -292,7 +273,7 @@ exports.fetchAllQueries = async(req,res)=>{
         .populate('raisedBy',"-password")
         .exec();
 
-        console.log("All Queries: ",allQueries)
+        // console.log("All Queries: ",allQueries)
 
         if(!allQueries){
             return res.status(404).json({
@@ -339,7 +320,7 @@ exports.fetchCompleteQueryDetails = async(req,res)=>{
         .populate('raisedBy',"-password")
         .exec();
 
-        console.log("Complete Query Details: ",completeQueryDetails)
+        // console.log("Complete Query Details: ",completeQueryDetails)
         
         if(!completeQueryDetails){
             return res.status(404).json({

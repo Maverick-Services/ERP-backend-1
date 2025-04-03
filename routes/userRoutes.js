@@ -5,6 +5,7 @@ const router = express.Router();
 const User = require('../models/User-model');
 const { authMiddleware, isAdmin } = require('../middleware/authMiddleware');
 const { createQuery, addReply, updateQueryStatus, fetchQueriesByEmployee, fetchQueriesByTeam, fetchAllQueries, fetchCompleteQueryDetails } = require('../controllers/queryController');
+const { createAnnouncement, fetchAnnouncementsByTeam, fetchAllAnnouncements, fetchCompleteAnnouncementDetails, deleteAnnouncement } = require('../controllers/announcementController');
 
 router.get('/getUsers', authMiddleware, isAdmin,getUsers);
 
@@ -20,6 +21,8 @@ router.get('/getTasksbyUser', authMiddleware,getTasksbyUser);
 router.post('/createUser', authMiddleware, isAdmin, createUser);
 router.put('/updateUser',authMiddleware, isAdmin, updateUser);
 router.delete('/deleteUser', authMiddleware, isAdmin,deleteUser);
+
+// Query Routes
 router.post('/createQuery',createQuery);
 router.post('/addReply',addReply);
 router.post('/updateQueryStatus',updateQueryStatus);
@@ -27,5 +30,12 @@ router.post('/fetchQueriesByEmployee',fetchQueriesByEmployee);
 router.post('/fetchQueriesByTeam',fetchQueriesByTeam);
 router.get('/fetchAllQueries',fetchAllQueries);
 router.post('/fetchCompleteQueryDetails',fetchCompleteQueryDetails);
+
+//Announcement
+router.post('/createAnnouncement',createAnnouncement);
+router.post('/fetchAnnouncementsByTeam',fetchAnnouncementsByTeam);
+router.get('/fetchAllAnnouncements',fetchAllAnnouncements);
+router.post('/fetchCompleteAnnouncementDetails',fetchCompleteAnnouncementDetails);
+router.post('/deleteAnnouncement',deleteAnnouncement);
 
 module.exports = router;

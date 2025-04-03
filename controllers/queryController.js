@@ -108,7 +108,7 @@ exports.addReply = async(req,res)=>{
 
         // console.log("edit",updatedQuery);
 
-        return res.status(404).json({
+        return res.status(200).json({
             success: true,
             message: "Reply Added Successfully",
             data: updatedQuery
@@ -162,9 +162,9 @@ exports.updateQueryStatus = async(req,res)=>{
 
         // console.log("edit",updatedQuery);
 
-        return res.status(404).json({
+        return res.status(200).json({
             success: true,
-            message: "Reply Added Successfully",
+            message: "Query Status Updated Successfully",
             data: updatedQuery
         });
 

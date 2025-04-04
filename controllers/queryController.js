@@ -107,9 +107,9 @@ exports.addReply = async(req,res)=>{
 exports.updateQueryStatus = async(req,res)=>{
     try{
 
-        const {queryId,adminId,status} = req.body;
+        const {queryId,status} = req.body;
         
-        if(!adminId || !queryId || !status){
+        if(!queryId || !status){
             return res.status(404).json({
                 success: false,
                 message: "Required details not found"

@@ -6,6 +6,7 @@ const User = require('../models/User-model');
 const { authMiddleware, isAdmin } = require('../middleware/authMiddleware');
 const { createQuery, addReply, updateQueryStatus, fetchQueriesByEmployee, fetchQueriesByTeam, fetchAllQueries, fetchCompleteQueryDetails } = require('../controllers/queryController');
 const { createAnnouncement, fetchAnnouncementsByTeam, fetchAllAnnouncements, fetchCompleteAnnouncementDetails, deleteAnnouncement } = require('../controllers/announcementController');
+const { markEntryAttendance, markExitAttendance, fetchAttendanceByMonth, fetchCustomEmployeeAttendance } = require('../controllers/attendanceController');
 
 router.get('/getUsers', authMiddleware, isAdmin,getUsers);
 
@@ -31,11 +32,16 @@ router.post('/fetchQueriesByTeam',fetchQueriesByTeam);
 router.get('/fetchAllQueries',fetchAllQueries);
 router.post('/fetchCompleteQueryDetails',fetchCompleteQueryDetails);
 
-//Announcement
+//Announcement Routes
 router.post('/createAnnouncement',createAnnouncement);
 router.post('/fetchAnnouncementsByTeam',fetchAnnouncementsByTeam);
 router.get('/fetchAllAnnouncements',fetchAllAnnouncements);
 router.post('/fetchCompleteAnnouncementDetails',fetchCompleteAnnouncementDetails);
 router.post('/deleteAnnouncement',deleteAnnouncement);
+
+//Attendance Routes
+router.post('/markEntryAttendance',markEntryAttendance);
+router.post('/markExitAttendance',markExitAttendance);
+router.post('/fetchCustomEmployeeAttendance',fetchCustomEmployeeAttendance);
 
 module.exports = router;

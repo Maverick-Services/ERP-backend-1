@@ -1,12 +1,12 @@
 const Announcement = require('../models/Announcement-model');
 const { ROLE } = require('../utils/constants');
 
-exports.createAnnouncement = async(req,res)=>{
-    try{
+exports.createAnnouncement = async (req, res) => {
+    try {
 
-        const {teamId,role,subject,description} = req.body;
+        const { teamId, role, subject, description } = req.body;
 
-        if(!role || !subject || !description || (role === ROLE.TEAM && !teamId)){
+        if (!role || !subject || !description || (role === ROLE.TEAM && !teamId)) {
             return res.status(404).json({
                 success: false,
                 message: "Required details not found"
@@ -28,8 +28,8 @@ exports.createAnnouncement = async(req,res)=>{
             data: newAnnouncement
         });
 
-    }catch(err){
-        console.log("Announcement Error",err);
+    } catch (err) {
+        console.log("Announcement Error", err);
         return res.status(500).json({
             success: false,
             message: "Internal Server Error"
@@ -37,12 +37,12 @@ exports.createAnnouncement = async(req,res)=>{
     }
 }
 
-exports.fetchAnnouncementsByTeam = async(req,res)=>{
+exports.fetchAnnouncementsByTeam = async (req, res) => {
     try {
-        
+
         const { teamId } = req.body;
 
-        if(!teamId){
+        if (!teamId) {
             return res.status(404).json({
                 success: false,
                 message: "Required details not found"
@@ -52,13 +52,13 @@ exports.fetchAnnouncementsByTeam = async(req,res)=>{
         const allAnnouncements = await Announcement.find({
             raisedBy: teamId
         })
-        .sort({createdAt: -1})
-        .populate('raisedBy',"-password")
-        .exec();
+            .sort({ createdAt: -1 })
+            .populate('raisedBy', "-password")
+            .exec();
 
         // console.log("All Announcements: ",allAnnouncements)
-        
-        if(!allAnnouncements){
+
+        if (!allAnnouncements) {
             return res.status(404).json({
                 success: false,
                 message: "Announcements not found"
@@ -72,7 +72,7 @@ exports.fetchAnnouncementsByTeam = async(req,res)=>{
         })
 
     } catch (err) {
-        console.log("Could not fetch Announcements",err);
+        console.log("Could not fetch Announcements", err);
         return res.status(500).json({
             success: false,
             message: "Internal Server Error"
@@ -80,17 +80,19 @@ exports.fetchAnnouncementsByTeam = async(req,res)=>{
     }
 }
 
-exports.fetchAllAnnouncements = async(req,res)=>{
+exports.fetchAllAnnouncements = async (req, res) => {
     try {
- 
-        const allAnnouncements = await Announcement.find({})
-        .sort({createdAt: -1})
-        .populate('raisedBy',"-password")
-        .exec();
+
+        const allAnnouncements = await Announcement.find({
+            role: ROLE.ADMIN
+        })
+            .sort({ createdAt: -1 })
+            .populate('raisedBy', "-password")
+            .exec();
 
         // console.log("All Announcements: ",allAnnouncements)
 
-        if(!allAnnouncements){
+        if (!allAnnouncements) {
             return res.status(404).json({
                 success: false,
                 message: "Announcements not found"
@@ -104,7 +106,7 @@ exports.fetchAllAnnouncements = async(req,res)=>{
         })
 
     } catch (err) {
-        console.log("Could not fetch Announcements",err);
+        console.log("Could not fetch Announcements", err);
         return re.status(500).json({
             success: false,
             message: "Internal Server Error"
@@ -112,12 +114,12 @@ exports.fetchAllAnnouncements = async(req,res)=>{
     }
 }
 
-exports.fetchCompleteAnnouncementDetails = async(req,res)=>{
+exports.fetchCompleteAnnouncementDetails = async (req, res) => {
     try {
-        
+
         const { announcementId } = req.body;
 
-        if(!announcementId){
+        if (!announcementId) {
             return res.status(404).json({
                 success: false,
                 message: "Required details not found"
@@ -125,12 +127,12 @@ exports.fetchCompleteAnnouncementDetails = async(req,res)=>{
         }
 
         const completeAnnouncementDetails = await Announcement.findById(announcementId)
-        .populate('raisedBy',"-password")
-        .exec();
+            .populate('raisedBy', "-password")
+            .exec();
 
         // console.log("Complete Announcement Details: ",completeAnnouncementDetails)
-        
-        if(!completeAnnouncementDetails){
+
+        if (!completeAnnouncementDetails) {
             return res.status(404).json({
                 success: false,
                 message: "Announcement details not found"
@@ -144,7 +146,7 @@ exports.fetchCompleteAnnouncementDetails = async(req,res)=>{
         })
 
     } catch (err) {
-        console.log("Could not fetch Announcement details",err);
+        console.log("Could not fetch Announcement details", err);
         return res.status(500).json({
             success: false,
             message: "Internal Server Error"
@@ -152,12 +154,12 @@ exports.fetchCompleteAnnouncementDetails = async(req,res)=>{
     }
 }
 
-exports.deleteAnnouncement = async(req,res)=>{
-    try{
+exports.deleteAnnouncement = async (req, res) => {
+    try {
 
-        const {announcementId} = req.body;
+        const { announcementId } = req.body;
 
-        if(!announcementId){
+        if (!announcementId) {
             return res.status(404).json({
                 success: false,
                 message: "Required details not found"
@@ -172,8 +174,8 @@ exports.deleteAnnouncement = async(req,res)=>{
             message: "Announcement deleted successfully"
         });
 
-    }catch(err){
-        console.log("Announcement Error",err);
+    } catch (err) {
+        console.log("Announcement Error", err);
         return res.status(500).json({
             success: false,
             message: "Internal Server Error"
